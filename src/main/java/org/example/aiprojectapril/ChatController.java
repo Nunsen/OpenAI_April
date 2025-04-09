@@ -1,6 +1,5 @@
-package org.example.aiprojectapril.controller;
+package org.example.aiprojectapril;
 
-import org.example.aiprojectapril.service.ChatService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,4 +1,4 @@
-package org.example.aiprojectapril.service;
+package org.example.aiprojectapril;
 
 import org.example.aiprojectapril.ChatGPTRequest;
 import org.example.aiprojectapril.ChatGPTResponse;
@@ -27,10 +27,35 @@ public class ChatService {
     // Metode der sender brugerens input til OpenAI og returnerer AI'ens svar som tekst
     public String getReplyFromOpenAI(String userInput) {
         // Systemrolle: styr AI’en
-        ChatGPTRequest.Message systemMessage = new ChatGPTRequest.Message(
-                "system",
-                "Du er en rejseplanlægger. Du skal hjælpe brugeren med at planlægge rejser ud fra input om varighed, interesser, budget og rejsetype (solo, familie, vennegruppe). Svar med en dag-til-dag plan og et budget med forventede rejseomkostninger herunder fly, hotel, mad og aktivitets omkostninger."
+        ChatGPTRequest.Message systemMessage = new ChatGPTRequest.Message("system",
+                "Du er en rejseplanlægger. Dine svar skal følge et præcist og konsekvent format.\n\n" +
+
+                        "1. Start med en overskrift:\n" +
+                        "Byer i rejsen:\n" +
+                        "- [by 1]\n" +
+                        "- [by 2]\n" +
+                        "- [by 3]\n" +
+                        "(kun bynavne – ingen lande, restauranter, bygninger eller madretter)\n\n" +
+
+                        "2. Derefter skriv sætningen:\n" +
+                        "Rejsen går til [overordnet destination].\n\n" +
+
+                        "3. Følg op med en dag-til-dag plan. Hver dag eller gruppe af dage skal følge formatet:\n" +
+                        "Dag X-Y: [aktiviteter] i [bynavn], [land].\n" +
+                        "Beskriv aktiviteter, lokale oplevelser og gerne anbefalede retter eller restauranter (kun i denne del).\n\n" +
+
+                        "4. Afslut med et budget, der ser sådan ud:\n" +
+                        "Transport: X DKK\n" +
+                        "Overnatning: Y DKK\n" +
+                        "Mad og oplevelser: Z DKK\n" +
+                        "Samlet budget: SUM DKK\n\n" +
+
+                        "Bemærk:\n" +
+                        "- Byer i listen i toppen bruges til at vise et kort, så skriv kun reelle byer som findes på Google Maps.\n" +
+                        "- Brug ikke lande, bygninger, mad eller fiktive navne i bylisten.\n" +
+                        "- Alt hvad der vises i punktlisten må kun være navnet på en by.\n"
         );
+
 
         // Brugerens input – det som personen har skrevet i frontend
         ChatGPTRequest.Message userMessage = new ChatGPTRequest.Message("user", userInput);
